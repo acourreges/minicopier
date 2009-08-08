@@ -1,0 +1,111 @@
+MiniCopier 0.5
+May 2009
+Adrian Courrèges
+
+PROJECT PAGE :
+==============
+http://www.adriancourreges.com/projects/minicopier/
+
+
+DESCRIPTION:
+============
+
+MiniCopier intends to improve graphic copy/paste file operations on some popular OSes.
+Its features are closed to the ones of SuperCopier (Windows environment). 
+It lets you create a queue of transfers, so only a file is copied at a time.
+You can manage the queue by changing the position of any pending transfer.
+It also handles pause and resume operations. 
+If a transfer fails, the bytes already copied are not erased, so MiniCopier
+can resume the transfer for you later. 
+All the operations are done by "drag-and-drops" on the icons. 
+MiniCopier is published under the GNU GPL. 
+
+
+REQUIREMENTS :
+==============
+Unix system with: GNOME/KDE/XFCE
+or Windows or Mac OS X
+Java virtual machine 1.5 (or more recent)
+
+
+INSTALLATION:
+=============
+Nothing to install.
+(Except Sun JRE 5.0 or more recent)
+
+
+RUN:
+====
+Just launch the MiniCopier.sh script.
+
+/!\ If you have Beryl/Compiz enabled, you might get a blank windows. 
+For a fix, you can try to add the line below in MiniCopier.sh
+
+export AWT_TOOLKIT="MToolkit"
+
+just before the line: java -jar MiniCopier.jar $* 
+
+Options:
+
+See configuration.ini (generated the fist time you launch MiniCopier) for
+more options. 
+
+
+USE:
+====
+
+Drag and drop files or folder you wish to copy on the basket icon.
+Once you're done with filling the basket, drag and drop a destination folder
+to the box icon. All the content of the basket will be copied to that directory. 
+
+LICENSE:
+========
+
+MiniCopier is free software released under the GNU General Public License (GPL).
+The software is also distributed with the PgsLookAndFeel library, (Apache Software
+License, see https://pgslookandfeel.dev.java.net).
+
+
+CONTACT:
+========
+
+If you want to send me bug reports, suggestions, or just tell what you think
+of this software: www.adriancourreges.com/about/
+
+
+CHANGELOG:
+==========
+
+v0.5
+Now support transfer speed limit.
+Displays current transfer speed. 
+Displays remaining time for current file and main queue.
+Several bugs fixed.
+
+v0.4
+As GTK support for swing applications suffers from many problems (combo box bug crashes 
+the process, plus some graphic issues), MiniCopier now uses the Pagosoft library. 
+default look'n'feel : pgs
+the option -nolnf is removed (edit configuration.ini for look'n'feel settings)
+
+v0.3
+new Panel to manage the failed transfers (retry, clear)
+language support : i18n with French and English
+Windows compatibility
+config file auto-generated
+multiselection in tables
+source code published under GPL
+new icons
+"Credits" dialog updated
+Some minor bugs correction
+
+v0.2:
+if possible, host system look'n'feel is used by default (Gnome) (disable with "-nolnf").
+ability to rename the target of a transfer (if collision).
+ability to follow or ignore symbolic links.
+new panel for setting options.
+user can define a default action (for collision and links).
+the number of items inside the basket is displayed.
+sizes of total queue and current file are displayed. 
+transfers list now displays size of each transfer and the destination folder.
+change of some strings in dialog boxes. 

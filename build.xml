@@ -1,0 +1,42 @@
+<project name="MiniCopier" default="build" basedir=".">
+
+<property name="src" location="src"/>
+<property name="bin" location="class"/>
+<property name="lib" location="lib"/>
+
+
+<target name="prepare" description="directory creation">
+  <tstamp/>
+  <mkdir dir="${bin}"/>
+</target>
+
+<target name="build" depends="prepare" description="compilation">
+  <javac source="1.5" srcdir="${src}" destdir="${bin}"/>
+  <copy todir="${bin}" preservelastmodified="true">
+	<fileset dir="${src}" >
+	<exclude name="**/*.java" />
+	<exclude name="**/*.class" />
+	</fileset>
+  </copy>
+</target>
+
+<target name="doc" description="javadoc generation">
+  <javadoc destDir="javadoc">
+	<fileset dir="."/>
+  </javadoc>
+</target>
+
+<target name="jar" depends="build" description="create executable JAR archive">
+  <jar basedir="${bin}" destfile="MiniCopier.jar" manifest="Manifest.txt">
+  <!--<fileset dir="${lib}">
+  <include name="${lib}/**/*.jar"/>
+  </fileset> -->
+  </jar>
+</target>
+
+<target name="clean" description="reset">
+  <delete dir="${bin}"/>
+</target>
+
+
+</project>

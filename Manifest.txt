@@ -1,0 +1,3 @@
+Main-Class: minicopier.Copier
+Class-Path: lib/PgsLookAndFeel.jar
+
