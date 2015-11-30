@@ -104,6 +104,16 @@ public class Copier {
 		this.basket.add(path);
 	}
 	
+	/**
+	 * Add a file/folder path to the basket.
+	 * @param path path to be copied
+	 * @param move true if delete the path after copy
+	 */
+	public void add2basket (String path, Boolean move)
+	{
+		this.basket.add(path, move);
+	}
+
 	public String getCurrentFileSource() {
 		return this.currentFileSource;
 	}
@@ -135,15 +145,14 @@ public class Copier {
 		return this.busy;
 	}
 	
-	
 	public void skip(boolean b){
 		this.copyOp.setCancelAndQueue(b);
 	}
 	
-	public void addURIString2basket (String uriString) {
+	public void addURIString2basket (String uriString, Boolean move) {
 		String file2add = this.stringURI2StringPath(uriString);
 		if (file2add != null) {
-			this.add2basket(file2add);
+			this.add2basket(file2add, move);
 		}
 	}
 	
@@ -176,8 +185,6 @@ public class Copier {
 	
 	/* Add the items of the folder in the queue */
 	public void addFolder2Queue(File parentFolder, String destinationFolder) {
-		
-		
 		//Listing directory content
 		File[] dirlist = parentFolder.listFiles();
 		
@@ -237,14 +244,15 @@ public class Copier {
 		
 		Basket basketBackup = this.basket ;
 		this.basket = new Basket();
-		Iterator<String> basketContent = basketBackup.getIterator();
+		Iterator<Basket.Item> basketContent = basketBackup.getIterator();
 		
 		String filePath;
 		
 		File item2add;
 		
 		while (basketContent.hasNext()) {
-			filePath = basketContent.next();
+			Basket.Item i = basketContent.next();
+			filePath      = i.getContent();
 			
 			item2add = new File(filePath);
 			
@@ -252,7 +260,11 @@ public class Copier {
 				if (!item2add.isDirectory()) { //if the item is a file
 					
 					System.out.println("adding file to main queue");
-					addFile2Queue(new FileToTransfer(filePath,destinationPath));
+					addFile2Queue(
+							new FileToTransfer(
+									filePath,
+									destinationPath,
+									i.getMove()));
 					
 				} else { //the item is a folder
 					//System.out.println("adding folder to main queue");
@@ -429,7 +441,7 @@ public class Copier {
 				//System.out.println("-> " + transfer.getDestinationFilePath());
 				
 				//Creation of thread
-				this.copyOp = new TransferTask(this,transfer,append);
+				this.copyOp = new TransferTask(this,transfer,append,transfer.getMove());
 				
 				//System.out.println("Beginning transfer...");
 				copyOp.start();

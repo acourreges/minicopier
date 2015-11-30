@@ -20,7 +20,7 @@
 package minicopier;
 import java.io.*;
 
-/** FileToTransfer represents a tranfer requested by the user. 
+/** FileToTransfer represents a transfer requested by the user. 
  * It contains all the informations about the source file, and where
  * it must be copied, according to the user.
  */
@@ -41,6 +41,9 @@ public class FileToTransfer {
 	
 	//Size of source file
 	private long size;
+
+	//When TRUE delete a source file after copy
+	private Boolean move;
 	
 	/** Creation of a FileToTransfer
 	 * @param _path2source system path to the source file
@@ -71,6 +74,13 @@ public class FileToTransfer {
 		+ File.separator + this.name;
 			
 		
+	}
+
+	public FileToTransfer(String _path2source, String _path2destinationfolder,
+			Boolean _move)
+	{
+		this(_path2source, _path2destinationfolder);
+		this.move = _move;
 	}
 	
 	public String getSourcePath() {
@@ -104,6 +114,11 @@ public class FileToTransfer {
 	
 	public long getSize() {
 		return this.size;
+	}
+	
+	public Boolean getMove()
+	{
+		return move;
 	}
 	
 	public void changeTargetName(String newName){

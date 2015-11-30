@@ -22,22 +22,91 @@ import java.util.*;
 
 public class Basket {
 
+	public static class Item
+	{
+		String  content;
+		boolean move   ; 
+		
+		private Item(String content)
+		{
+			this.content = content;
+		}
+
+		private Item(String content, Boolean move)
+		{
+			this.content = content;
+			this.move    = move   ;
+		}
+
+		/**
+		 * Factory method creates movable content.
+		 * @param content
+		 * @return 
+		 */
+		public static Item Movable(String content)
+		{
+			return new Item(content, true);
+		}
+
+		/**
+		 * Factory method creates default item.
+		 * @param content
+		 * @return 
+		 */
+		public static Item Default(String content)
+		{
+			return new Item(content);
+		}
+
+		public String toString()
+		{
+			return getContent();
+		}
+
+		public String getContent()
+		{
+			return content;
+		}
+
+		public boolean getMove()
+		{
+			return move;
+		}
+	}
+
 	//Contains paths of files/folders to be copied
-	private Vector<String> basketContent;
+	private Vector<Item> basketContent;
 	
 	/* Creation of an empty basket */
 	public Basket () {
-		this.basketContent = new Vector<String>() ;
+		this.basketContent = new Vector<Item>() ;
 	}
 	
 	/* Add a path to the basket
 	 * @path path of a folder/file to be copied
 	 */
 	public void add (String path) {
-		this.basketContent.add(path);
+		this.basketContent.add(Basket.Item.Default(path));
+	}
+
+	/**
+	 * Add a path to the basket, when move true then path will be moved.
+	 * @param path
+	 * @param move 
+	 */
+	public void add (String path, Boolean move)
+	{
+		if (move)
+		{
+		   this.basketContent.add(Basket.Item.Movable(path));
+		} 
+		else
+		{
+			this.basketContent.add(Basket.Item.Default(path));
+		} 
 	}
 	
-	public Iterator<String> getIterator() {
+	public Iterator<Item> getIterator() {
 		return basketContent.iterator();
 	}
 	
