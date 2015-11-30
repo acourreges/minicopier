@@ -19,7 +19,7 @@
 
 package minicopier;
 import java.io.*;
-
+import java.nio.file.*;
 
 public class TransferTask extends Thread{
 
@@ -36,6 +36,8 @@ public class TransferTask extends Thread{
 	private Boolean paused;
 	
 	private Boolean cancel;
+
+	private Boolean move  ;
 	
 	private long totalSize;
 	
@@ -44,8 +46,6 @@ public class TransferTask extends Thread{
 	boolean completed;
 	
 	boolean putInQueue;
-	
-
 	
 	public TransferTask(Copier c, FileToTransfer file, boolean _app){
 		this.copier = c;
@@ -61,6 +61,18 @@ public class TransferTask extends Thread{
 		this.putInQueue = false;
 	}
 	
+	/**
+	 *
+	 * @param c
+	 * @param file
+	 * @param _app
+	 * @param _move Delete a file after task completed.
+	 */
+	public TransferTask(Copier c, FileToTransfer file, boolean _app, boolean _move)
+	{
+		this(c,file,_app);
+		this.move=_move;
+	}
 	
 	public boolean getCompleted(){
 		return this.completed;
@@ -160,7 +172,7 @@ public class TransferTask extends Thread{
                 // Copy successful
                 this.completed = true;
                 //System.out.println("Transfer completed !");
-               
+				
         } catch( java.io.FileNotFoundException f ) {
                 
         } catch( java.io.IOException e ) {
@@ -169,7 +181,35 @@ public class TransferTask extends Thread{
         } finally {
                 // Whatever happens, closing streams
                 try {
-                        sourceFile.close();
+					sourceFile.close();
+					if (completed)
+					{ 
+						if (this.move)
+						{ 
+							try
+							{
+								Files.delete(source.toPath());
+								System.out.println("File deleted!");
+							}
+							catch (NoSuchFileException ensf)
+							{
+								ensf.printStackTrace(System.out);
+							}
+							catch (DirectoryNotEmptyException edne)
+							{
+								edne.printStackTrace(System.out);
+							}
+							catch (IOException eio) 
+							{
+								eio.printStackTrace(System.out);
+							}
+							catch (SecurityException es)
+							{
+								es.printStackTrace(System.out);
+							}
+						} 
+					}
+
                 } catch(Exception e) { 
                 	System.out.println("Error closing source file !");
                 }

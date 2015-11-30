@@ -1,4 +1,4 @@
-# MiniCopier
+# MiniCopier (+deletes source after copied)
 
 ### [Website](http://www.adriancourreges.com/projects/minicopier/)&nbsp;&nbsp;&nbsp;&nbsp;[Download](http://www.adriancourreges.com/projects/minicopier/#dl-section)&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -21,6 +21,7 @@ MiniCopier is multiplatform and supports Linux, Windows and MacOS X systems.
 * Can follow or ignore symbolic links (Unix systems only)
 * Set a default behavior if target file already exists
 * Keep track of the transfers which failed.
+* Hold SHIFT when dropping to the basket to make COPY, hold CTRL to DELETE SOURCE file after COPY. DELETE AFTER COPY is default.
 
 
 ## Requirements

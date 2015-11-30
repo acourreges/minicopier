@@ -40,15 +40,18 @@ public class MainQueue {
 		this.copier = c;
 		this.mainQueue = new Vector<FileToTransfer>();
 		
-		String[] columnsNames = {Language.get("MainFrame.TransfersPane.sourceRow"),
-				Language.get("MainFrame.TransfersPane.sizeRow"),
-				Language.get("MainFrame.TransfersPane.destinationRow")};
+		String[] columnsNames = {
+			Language.get("MainFrame.TransfersPane.sourceRow"     ),
+			Language.get("MainFrame.TransfersPane.actionRow"     ),
+			Language.get("MainFrame.TransfersPane.sizeRow"       ),
+			Language.get("MainFrame.TransfersPane.destinationRow")};
 		this.tableModel = new TransfersModel(columnsNames,0);
 	}
 
 	public synchronized void addFile(FileToTransfer file){
 		this.mainQueue.add(file);
 		String[] data = {file.getSourcePath(),
+				Language.get(file.getMove() ? "MainFrame.TransfersPane.actionMove" : "MainFrame.TransfersPane.actionCopy"),
 				DialogMsg.prettySize(file.getSize()),
 				file.getDestinationFolderPath()
 		};

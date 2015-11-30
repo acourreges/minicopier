@@ -206,6 +206,7 @@ public class MainFrame extends JFrame{
 			    	  DataFlavor fl = flavors[i];
 			    	  
 			    	  Object obj = tr.getTransferData(flavors[i]);
+					  System.out.println("Drop action "+ dtde.getDropAction());
 			    	  
 			    	  
 			    	  //For Windows and Mac
@@ -214,7 +215,9 @@ public class MainFrame extends JFrame{
 							
 							for (File fi : files){
 								System.out.println(fi.toURI().toString());
-								copier.addURIString2basket(fi.toURI().toString());
+								copier.addURIString2basket(
+										fi.toURI().toString(), 
+										DnDConstants.ACTION_MOVE == dtde.getDropAction()); //see if it's MOVE action
 							}
 							
 							dtde.dropComplete(true);
@@ -231,7 +234,9 @@ public class MainFrame extends JFrame{
 			            	Scanner scan = new Scanner(allFilesPath.trim());
 			            	
 			            	while (scan.hasNextLine()) {					
-								copier.addURIString2basket(scan.nextLine());
+								copier.addURIString2basket(
+										scan.nextLine(), 
+										DnDConstants.ACTION_MOVE == dtde.getDropAction()); //see if it's MOVE action
 							}
 			            	
 			            	dtde.dropComplete(true);
